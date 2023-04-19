@@ -4,15 +4,11 @@ import { startTransition, useState, useEffect } from "react";
 import fs from "fs";
 import path from "path";
 
-import { OpenAI } from "@/lib/OpenAI";
 import { QuoteCard } from "@/components/QuoteCard";
+import { randomNumberBetween } from "@/lib/utils/randomNumberBetween";
+import { fetchRandomQuote } from "@/lib/api";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export function randomNumberBetween(min: number, max: number): number {
-  console.log(`randomNumberBetween`, min, max);
-  return Math.round(Math.random() * (max - min) + min);
-}
 
 export type HomeProps = {
   images: string[];
@@ -21,16 +17,10 @@ export type HomeProps = {
 export default function Home({ images }: HomeProps) {
   const [murrayism, setMurrayism] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-  const [openAI, setOpenAI] = useState<OpenAI | null>(null);
+
   const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
 
-  useEffect(() => {
-    if (typeof openAI === "undefined") {
-      return;
-    }
-    const api = new OpenAI();
-    setOpenAI(() => api);
-  }, []);
+  useEffect(() => {}, []);
 
   async function handleClick(e: any) {
     e.preventDefault();
@@ -39,16 +29,13 @@ export default function Home({ images }: HomeProps) {
 
     startTransition(() => {
       try {
-        if (openAI) {
-          openAI.prompt().then((response) => {
-            // Pick a random Bill Murray photo from those in our public/images/billmurray folder.
-            const index = randomNumberBetween(0, images.length - 1);
-
-            setMurrayism(response.data.choices[0].message?.content || "");
-            setAvatarSrc(`/images/billmurray/${images[index]}`);
-            setLoading(false);
-          });
-        }
+        fetchRandomQuote().then(({ quote }) => {
+          // Pick a random Bill Murray photo from those in our public/images/billmurray folder.
+          const index = randomNumberBetween(0, images.length - 1);
+          setAvatarSrc(`/images/billmurray/${images[index]}`);
+          setMurrayism(quote);
+          setLoading(false);
+        });
       } catch (error) {
         console.warn("error: ", error);
         setLoading(false);

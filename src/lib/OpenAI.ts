@@ -5,12 +5,12 @@ export class OpenAI {
   private openai: OpenAIApi;
 
   constructor() {
-    if (!process.env.NEXT_PUBLIC_OPENAI_API_KEY) {
-      throw new Error("NEXT_PUBLIC_OPENAI_API_KEY is not defined");
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error("OPENAI_API_KEY is not defined");
     }
 
     this.configuration = new Configuration({
-      apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+      apiKey: process.env.OPENAI_API_KEY,
     });
 
     this.openai = new OpenAIApi(this.configuration);
