@@ -8,7 +8,7 @@ export type QuoteCardProps = {
 
 export function QuoteCard({ quote, author, avatarSrc }: QuoteCardProps) {
   return (
-    <div className=" flex items-center justify-center px-5 py-5 ">
+    <div className="animate-in fade-in  flex items-center justify-center px-5 py-5 ">
       <div className="w-full mx-auto rounded-lg bg-white shadow-lg px-5 pt-5 pb-10 text-gray-800">
         <div className="w-full pt-1 pb-5">
           <div className="overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg relative">
