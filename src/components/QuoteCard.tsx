@@ -3,15 +3,21 @@ import Image from "next/image";
 export type QuoteCardProps = {
   quote: string;
   author: string;
+  avatarSrc: string;
 };
 
-export function QuoteCard({ quote, author }: QuoteCardProps) {
+export function QuoteCard({ quote, author, avatarSrc }: QuoteCardProps) {
   return (
-    <div className="min-w-screen min-h-screen  flex items-center justify-center px-5 py-5 max-w-fit">
+    <div className=" flex items-center justify-center px-5 py-5 ">
       <div className="w-full mx-auto rounded-lg bg-white shadow-lg px-5 pt-5 pb-10 text-gray-800">
         <div className="w-full pt-1 pb-5">
-          <div className="overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg">
-            {/* <img src="https://randomuser.me/api/portraits/men/15.jpg" alt=""> */}
+          <div className="overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg relative">
+            <Image
+              src={avatarSrc}
+              alt="Photo of Bill Murray"
+              className="rounded-full "
+              fill={true}
+            />
           </div>
         </div>
         <div className="w-full mb-10">

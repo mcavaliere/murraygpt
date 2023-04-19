@@ -1,16 +1,29 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { startTransition, useState, useEffect } from "react";
+import fs from "fs";
+import path from "path";
 
 import { OpenAI } from "@/lib/OpenAI";
 import { QuoteCard } from "@/components/QuoteCard";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export function randomNumberBetween(min: number, max: number): number {
+  console.log(`randomNumberBetween`, min, max);
+  return Math.round(Math.random() * (max - min) + min);
+}
+
+export type HomeProps = {
+  images: string[];
+};
+
+export default function Home({ images }: HomeProps) {
   const [murrayism, setMurrayism] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [openAI, setOpenAI] = useState<OpenAI | null>(null);
+  const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
+
   useEffect(() => {
     if (typeof openAI === "undefined") {
       return;
@@ -28,7 +41,11 @@ export default function Home() {
       try {
         if (openAI) {
           openAI.prompt().then((response) => {
+            // Pick a random Bill Murray photo from those in our public/images/billmurray folder.
+            const index = randomNumberBetween(0, images.length - 1);
+
             setMurrayism(response.data.choices[0].message?.content || "");
+            setAvatarSrc(`/images/billmurray/${images[index]}`);
             setLoading(false);
           });
         }
@@ -61,7 +78,11 @@ export default function Home() {
         {loading ? (
           <h2>Loading...</h2>
         ) : murrayism ? (
-          <QuoteCard quote={murrayism} author="Bill Murray" />
+          <QuoteCard
+            quote={murrayism}
+            author="Bill Murray"
+            avatarSrc={avatarSrc as string}
+          />
         ) : null}
       </div>
       <div className="z-10 w-full max-w-5xl items-center justify-end font-mono text-sm lg:flex ">
@@ -85,4 +106,18 @@ export default function Home() {
       </div>
     </main>
   );
+}
+
+export async function getStaticProps() {
+  // Get the list of images in the public/images/billmurray folder, filter out hidden files.
+  const imagesDir = path.join(process.cwd(), "public", "images", "billmurray");
+  const images = fs
+    .readdirSync(imagesDir)
+    .filter((name) => !name.startsWith("."));
+
+  return {
+    props: {
+      images,
+    },
+  };
 }
