@@ -29,7 +29,7 @@ export function QuoteButton({
         onClick={handleClick}
         disabled={loading}
       >
-        Generate quote
+        Generate new quote
       </button>
     </>
   );

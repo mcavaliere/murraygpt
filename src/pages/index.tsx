@@ -52,12 +52,12 @@ export default function Home({ images }: HomeProps) {
           <h1 className="font-bold text-2xl">MurrayGPT</h1>
         </div>
 
-        <div className="row hidden lg:flex  gap-4">
+        <div className="row hidden lg:flex gap-4">
           {quote && <QuoteButton loading={loading} handleClick={handleClick} />}
         </div>
       </div>
 
-      <div className="relative flex justify-center items-center place-items-center after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px] w-full h-80">
+      <div className="relative flex flex-col justify-center items-center place-items-center w-full h-80 gap-10">
         {quote && (
           <Transition
             appear={true}
@@ -76,15 +76,18 @@ export default function Home({ images }: HomeProps) {
             />
           </Transition>
         )}
-        {!quote && (
-          <div className="flex gap-4 flex-row relative -left-5">
-            <QuoteButton
-              loading={loading}
-              handleClick={handleClick}
-              size="xl"
-            />
-          </div>
-        )}
+
+        <div
+          className={` gap-4 flex-row relative -left-5 ${
+            quote ? " sm:flex lg:hidden" : "flex"
+          }`}
+        >
+          <QuoteButton
+            loading={loading}
+            handleClick={handleClick}
+            size={quote ? "sm" : "xl"}
+          />
+        </div>
       </div>
       <div className="z-10 w-full max-w-5xl items-center justify-end font-mono text-sm lg:flex ">
         <div className="flex place-items-center gap-2 lg:pointer-events-auto d-block">
