@@ -8,6 +8,7 @@ import { Transition } from "@headlessui/react";
 import { QuoteCard } from "@/components/QuoteCard";
 import { randomNumberBetween } from "@/lib/utils/randomNumberBetween";
 import { fetchRandomQuote } from "@/lib/api";
+import { QuoteButton } from "@/components/QuoteButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,7 @@ export type HomeProps = {
 };
 
 export default function Home({ images }: HomeProps) {
-  const [murrayism, setMurrayism] = useState<string | undefined>(undefined);
+  const [quote, setQuote] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
 
   const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
@@ -34,7 +35,7 @@ export default function Home({ images }: HomeProps) {
           // Pick a random Bill Murray photo from those in our public/images/billmurray folder.
           const index = randomNumberBetween(0, images.length - 1);
           setAvatarSrc(`/images/billmurray/${images[index]}`);
-          setMurrayism(quote);
+          setQuote(quote);
           setLoading(false);
         });
       } catch (error) {
@@ -47,31 +48,17 @@ export default function Home({ images }: HomeProps) {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <div className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
+        <div className="fixed left-0 top-0 flex w-full justify-center pb-6 pt-8  dark:from-inherit lg:static lg:w-auto lg:p-4">
           <h1 className="font-bold text-2xl">MurrayGPT</h1>
         </div>
 
         <div className="fixed right-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto lg:p-4 gap-4">
-          <Image
-            src="/images/icons/loader.svg"
-            width={28}
-            height={28}
-            alt="Loading spinner animation"
-            className={`${loading ? "block" : "hidden"}`}
-          />
-          <button
-            type="button"
-            className="flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={handleClick}
-            disabled={loading}
-          >
-            Get me a new Murrayism!
-          </button>
+          <QuoteButton loading={loading} handleClick={handleClick} />
         </div>
       </div>
 
       <div className="relative flex justify-center items-center place-items-center after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px] w-full h-80">
-        {murrayism && (
+        {quote && (
           <Transition
             appear={true}
             show={!loading}
@@ -83,7 +70,7 @@ export default function Home({ images }: HomeProps) {
             leaveTo="opacity-0"
           >
             <QuoteCard
-              quote={murrayism}
+              quote={quote}
               author="Bill Murray"
               avatarSrc={avatarSrc as string}
             />

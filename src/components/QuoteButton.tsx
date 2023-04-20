@@ -1,0 +1,32 @@
+import { MouseEventHandler } from "react";
+import Image from "next/image";
+
+export type QuoteButtonProps = {
+  loading?: boolean;
+  handleClick: MouseEventHandler<HTMLButtonElement>;
+};
+
+export function QuoteButton({
+  loading = false,
+  handleClick,
+}: QuoteButtonProps) {
+  return (
+    <>
+      <Image
+        src="/images/icons/loader.svg"
+        width={28}
+        height={28}
+        alt="Loading spinner animation"
+        className={`${loading ? "block" : "hidden"}`}
+      />
+      <button
+        type="button"
+        className="flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        onClick={handleClick}
+        disabled={loading}
+      >
+        Generate quote
+      </button>
+    </>
+  );
+}
