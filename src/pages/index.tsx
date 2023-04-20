@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { startTransition, useState, useEffect } from "react";
 import fs from "fs";
 import path from "path";
+import { Transition } from "@headlessui/react";
 
 import { QuoteCard } from "@/components/QuoteCard";
 import { randomNumberBetween } from "@/lib/utils/randomNumberBetween";
@@ -70,15 +71,24 @@ export default function Home({ images }: HomeProps) {
       </div>
 
       <div className="relative flex justify-center items-center place-items-center after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px] w-full h-80">
-        {loading ? (
-          <h2>Loading...</h2>
-        ) : murrayism ? (
-          <QuoteCard
-            quote={murrayism}
-            author="Bill Murray"
-            avatarSrc={avatarSrc as string}
-          />
-        ) : null}
+        {murrayism && (
+          <Transition
+            appear={true}
+            show={!loading}
+            enter="transition-opacity duration-75"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-150"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <QuoteCard
+              quote={murrayism}
+              author="Bill Murray"
+              avatarSrc={avatarSrc as string}
+            />
+          </Transition>
+        )}
       </div>
       <div className="z-10 w-full max-w-5xl items-center justify-end font-mono text-sm lg:flex ">
         <div className="mb-32 ">
