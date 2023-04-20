@@ -21,7 +21,7 @@ export function QuoteButton({
         width={28}
         height={28}
         alt="Loading spinner animation"
-        className={`${loading ? "visible" : "invisible"}`}
+        className={`${loading ? "visible" : "invisible"} `}
       />
       <button
         type="button"

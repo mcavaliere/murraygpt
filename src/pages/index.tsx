@@ -47,12 +47,12 @@ export default function Home({ images }: HomeProps) {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between  text-sm lg:flex">
-        <div className="fixed left-0 top-0 flex w-full justify-center font-mono pb-6 pt-8  dark:from-inherit lg:static lg:w-auto lg:p-4">
+      <div className="z-10 w-full max-w-5xl items-center justify-between text-sm lg:flex ">
+        <div className=" flex w-full justify-center font-mono dark:from-inherit lg:static lg:w-auto ">
           <h1 className="font-bold text-2xl">MurrayGPT</h1>
         </div>
 
-        <div className="fixed right-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto lg:p-4 gap-4">
+        <div className="row hidden lg:flex  gap-4">
           {quote && <QuoteButton loading={loading} handleClick={handleClick} />}
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function Home({ images }: HomeProps) {
           </Transition>
         )}
         {!quote && (
-          <div className="flex gap-4 flex-row">
+          <div className="flex gap-4 flex-row relative -left-5">
             <QuoteButton
               loading={loading}
               handleClick={handleClick}
@@ -87,22 +87,20 @@ export default function Home({ images }: HomeProps) {
         )}
       </div>
       <div className="z-10 w-full max-w-5xl items-center justify-end font-mono text-sm lg:flex ">
-        <div className="mb-32 ">
-          <div className="flex place-items-center gap-2 lg:pointer-events-auto d-block">
-            By <a href="https://mikecavaliere.com">Mike Cavaliere</a> @
-            <a
-              className="bg-slate-900 p-4 rounded-xl"
-              href="https://echobind.com"
-              target="_blank"
-            >
-              <Image
-                src="eb-logo.svg"
-                alt="Echobind Logo"
-                width={100}
-                height={100}
-              />
-            </a>
-          </div>
+        <div className="flex place-items-center gap-2 lg:pointer-events-auto d-block">
+          By <a href="https://mikecavaliere.com">Mike Cavaliere</a> @
+          <a
+            className="bg-slate-900 p-4 rounded-xl"
+            href="https://echobind.com"
+            target="_blank"
+          >
+            <Image
+              src="eb-logo.svg"
+              alt="Echobind Logo"
+              width={100}
+              height={100}
+            />
+          </a>
         </div>
       </div>
     </main>
