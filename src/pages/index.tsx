@@ -47,13 +47,13 @@ export default function Home({ images }: HomeProps) {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <div className="fixed left-0 top-0 flex w-full justify-center pb-6 pt-8  dark:from-inherit lg:static lg:w-auto lg:p-4">
+      <div className="z-10 w-full max-w-5xl items-center justify-between  text-sm lg:flex">
+        <div className="fixed left-0 top-0 flex w-full justify-center font-mono pb-6 pt-8  dark:from-inherit lg:static lg:w-auto lg:p-4">
           <h1 className="font-bold text-2xl">MurrayGPT</h1>
         </div>
 
         <div className="fixed right-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto lg:p-4 gap-4">
-          <QuoteButton loading={loading} handleClick={handleClick} />
+          {quote && <QuoteButton loading={loading} handleClick={handleClick} />}
         </div>
       </div>
 
@@ -75,6 +75,15 @@ export default function Home({ images }: HomeProps) {
               avatarSrc={avatarSrc as string}
             />
           </Transition>
+        )}
+        {!quote && (
+          <div className="flex gap-4 flex-row">
+            <QuoteButton
+              loading={loading}
+              handleClick={handleClick}
+              size="xl"
+            />
+          </div>
         )}
       </div>
       <div className="z-10 w-full max-w-5xl items-center justify-end font-mono text-sm lg:flex ">
