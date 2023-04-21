@@ -10,8 +10,6 @@ import { randomNumberBetween } from "@/lib/utils/randomNumberBetween";
 import { fetchRandomQuote } from "@/lib/api";
 import { QuoteButton } from "@/components/QuoteButton";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export type HomeProps = {
   images: string[];
 };
