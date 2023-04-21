@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import { startTransition, useState, useEffect } from "react";
+import { startTransition, useReducer, useState, useEffect } from "react";
 import fs from "fs";
 import path from "path";
 import { Transition } from "@headlessui/react";
@@ -16,13 +16,27 @@ export type HomeProps = {
   images: string[];
 };
 
+export const INITIAL_STATE = {
+  messages: [],
+};
+
+export function reducer(state: any, action: any) {
+  switch (action.type) {
+    case "APPEND_MESSAGES": {
+      return {
+        messages: [...state.messages, ...action.messages],
+      };
+    }
+
+    default:
+      return state;
+  }
+}
+
 export default function Home({ images }: HomeProps) {
-  const [quote, setQuote] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-
   const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
-
-  useEffect(() => {}, []);
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   async function handleClick(e: any) {
     e.preventDefault();
@@ -31,13 +45,12 @@ export default function Home({ images }: HomeProps) {
 
     startTransition(() => {
       try {
-        fetchRandomQuote().then(({ messages }) => {
+        fetchRandomQuote(state.messages).then(({ quote }) => {
           // Pick a random Bill Murray photo from those in our public/images/billmurray folder.
           const index = randomNumberBetween(0, images.length - 1);
 
-          const quote = messages.slice(-1)[0].content;
           setAvatarSrc(`/images/billmurray/${images[index]}`);
-          setQuote(quote);
+          dispatch({ type: "APPEND_MESSAGES", messages: [quote] });
           setLoading(false);
         });
       } catch (error) {
@@ -46,6 +59,10 @@ export default function Home({ images }: HomeProps) {
       }
     });
   }
+
+  const quote = state.messages.length
+    ? state.messages.slice(-1)[0].content
+    : null;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
