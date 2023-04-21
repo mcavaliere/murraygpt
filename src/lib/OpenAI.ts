@@ -17,7 +17,6 @@ export class OpenAI {
   }
 
   async prompt(messages: ChatCompletionRequestMessage[]) {
-    console.log(`---------------- OpenAI.prompt -> messages `, messages);
     const response = await this.openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages,
