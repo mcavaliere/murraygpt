@@ -31,9 +31,11 @@ export default function Home({ images }: HomeProps) {
 
     startTransition(() => {
       try {
-        fetchRandomQuote().then(({ quote }) => {
+        fetchRandomQuote().then(({ messages }) => {
           // Pick a random Bill Murray photo from those in our public/images/billmurray folder.
           const index = randomNumberBetween(0, images.length - 1);
+
+          const quote = messages.slice(-1)[0].content;
           setAvatarSrc(`/images/billmurray/${images[index]}`);
           setQuote(quote);
           setLoading(false);

@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
+import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 
 export class OpenAI {
   private configuration: Configuration;
@@ -16,16 +16,10 @@ export class OpenAI {
     this.openai = new OpenAIApi(this.configuration);
   }
 
-  async prompt() {
+  async prompt(messages: ChatCompletionRequestMessage[]) {
     const response = await this.openai.createChatCompletion({
       model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "user",
-          content:
-            "Give me a random Bill Murray quote without citation. Stripe the quotation marks out. ",
-        },
-      ],
+      messages,
       temperature: 0.8,
     });
 
