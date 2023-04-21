@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
+import Link from "next/link";
 import { startTransition, useReducer, useState, useEffect } from "react";
 import fs from "fs";
 import path from "path";
@@ -9,6 +9,7 @@ import { QuoteCard } from "@/components/QuoteCard";
 import { randomNumberBetween } from "@/lib/utils/randomNumberBetween";
 import { fetchRandomQuote } from "@/lib/api";
 import { QuoteButton } from "@/components/QuoteButton";
+import { FaGithub } from "react-icons/fa";
 
 export type HomeProps = {
   images: string[];
@@ -106,7 +107,12 @@ export default function Home({ images }: HomeProps) {
           />
         </div>
       </div>
-      <div className="z-10 w-full max-w-5xl items-center justify-end font-mono text-sm lg:flex ">
+      <div className="z-10 w-full gap-10 flex-col-reverse  max-w-5xl items-center justify-end font-mono text-sm flex md:flex-row md:justify-between ">
+        <div className="flex">
+          <Link href="https://github.com/mcavaliere/murraygpt" target="_blank">
+            <FaGithub size={50} />
+          </Link>
+        </div>
         <div className="flex place-items-center gap-2 lg:pointer-events-auto d-block">
           By <a href="https://mikecavaliere.com">Mike Cavaliere</a> @
           <a
