@@ -8,6 +8,7 @@ import { Transition } from "@headlessui/react";
 import { QuoteCard } from "@/components/QuoteCard";
 import { randomNumberBetween } from "@/lib/utils/randomNumberBetween";
 import { fetchRandomQuote } from "@/lib/api";
+import { ErrorAlert } from "@/components/ErrorAlert";
 import { QuoteButton } from "@/components/QuoteButton";
 import { FaGithub } from "react-icons/fa";
 
@@ -34,6 +35,7 @@ export function reducer(state: any, action: any) {
 
 export default function Home({ images }: HomeProps) {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<any>(null);
   const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
@@ -43,19 +45,23 @@ export default function Home({ images }: HomeProps) {
     setLoading(true);
 
     startTransition(() => {
-      try {
-        fetchRandomQuote(state.messages).then(({ quote }) => {
+      fetchRandomQuote(state.messages)
+        .then(({ quote }) => {
           // Pick a random Bill Murray photo from those in our public/images/billmurray folder.
           const index = randomNumberBetween(0, images.length - 1);
 
           setAvatarSrc(`/images/billmurray/${images[index]}`);
           dispatch({ type: "APPEND_MESSAGES", messages: [quote] });
           setLoading(false);
+        })
+        .catch((error) => {
+          setError({
+            title: "Ouch. ",
+            message: "I got a boo-boo. 😭 Try again later. ",
+          });
+          console.warn("error: ", error);
+          setLoading(false);
         });
-      } catch (error) {
-        console.warn("error: ", error);
-        setLoading(false);
-      }
     });
   }
 
@@ -75,25 +81,33 @@ export default function Home({ images }: HomeProps) {
         </div>
       </div>
 
-      <div className="relative flex flex-col justify-center items-center place-items-center w-full h-80 gap-10">
-        {quote && (
-          <Transition
-            appear={true}
-            show={!loading}
-            enter="transition-opacity duration-75"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity duration-150"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
+      <div className="relative flex flex-col justify-center items-center place-items-center w-full h-80 gap-10 max-w-2xl">
+        <Transition
+          appear={true}
+          show={!loading}
+          enter="transition-opacity duration-75"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+          className="w-full"
+        >
+          {error && (
+            <ErrorAlert
+              title={error.title}
+              message={error.message}
+              onCloseClick={() => setError(null)}
+            />
+          )}
+          {quote && (
             <QuoteCard
               quote={quote}
               author="Bill Murray"
               avatarSrc={avatarSrc as string}
             />
-          </Transition>
-        )}
+          )}
+        </Transition>
 
         <div
           className={` gap-4 flex-row relative -left-5 ${
