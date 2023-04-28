@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { startTransition, useReducer, useState, useEffect } from "react";
+import { startTransition, useReducer, useState } from "react";
 import fs from "fs";
 import path from "path";
 import { Transition } from "@headlessui/react";
