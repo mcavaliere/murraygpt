@@ -70,18 +70,20 @@ export default function Home({ images }: HomeProps) {
     : null;
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between text-sm lg:flex ">
+    <main className="flex min-h-screen flex-col items-center justify-between p-10">
+      <header className="z-10 w-full max-w-5xl items-center justify-between text-sm relative">
         <div className=" flex w-full justify-center font-mono dark:from-inherit lg:static lg:w-auto ">
           <h1 className="font-bold text-2xl">MurrayGPT</h1>
         </div>
 
-        <div className="row hidden lg:flex gap-4">
-          {quote && <QuoteButton loading={loading} handleClick={handleClick} />}
+        <div className="absolute right-0 top-0">
+          <Link href="https://github.com/mcavaliere/murraygpt" target="_blank">
+            <FaGithub size={30} />
+          </Link>
         </div>
-      </div>
+      </header>
 
-      <div className="relative flex flex-col justify-center items-center place-items-center w-full h-80 gap-10 max-w-2xl">
+      <div className="relative flex flex-col justify-between items-center place-items-center w-full h-80 gap-10 max-w-2xl ">
         <Transition
           appear={true}
           show={!loading}
@@ -108,25 +110,18 @@ export default function Home({ images }: HomeProps) {
             />
           )}
         </Transition>
-
         <div
-          className={` gap-4 flex-row relative -left-5 ${
-            quote ? " sm:flex lg:hidden" : "flex"
-          }`}
+          className={`${
+            quote ? "-bottom-28" : "bottom-32"
+          } gap-4 flex-row absolute justify-self-end sm:flex -top-50
+          transition-[bottom] ease-in-out duration-500
+          `}
         >
-          <QuoteButton
-            loading={loading}
-            handleClick={handleClick}
-            size={quote ? "sm" : "xl"}
-          />
+          <QuoteButton loading={loading} handleClick={handleClick} size="xl" />
         </div>
       </div>
-      <div className="z-10 w-full gap-10 flex-col-reverse  max-w-5xl items-center justify-end font-mono text-sm flex md:flex-row md:justify-between ">
-        <div className="flex">
-          <Link href="https://github.com/mcavaliere/murraygpt" target="_blank">
-            <FaGithub size={50} />
-          </Link>
-        </div>
+
+      <footer className="z-10 w-full gap-10 flex-col-reverse  max-w-5xl items-center justify-end font-mono text-sm flex md:flex-row md:justify-end ">
         <div className="flex place-items-center gap-2 lg:pointer-events-auto d-block">
           By <a href="https://mikecavaliere.com">Mike Cavaliere</a> @
           <a
@@ -142,7 +137,7 @@ export default function Home({ images }: HomeProps) {
             />
           </a>
         </div>
-      </div>
+      </footer>
     </main>
   );
 }
