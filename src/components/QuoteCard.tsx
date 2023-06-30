@@ -1,4 +1,12 @@
 import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 export type QuoteCardProps = {
   quote: string;
@@ -8,19 +16,21 @@ export type QuoteCardProps = {
 
 export function QuoteCard({ quote, author, avatarSrc }: QuoteCardProps) {
   return (
-    <div className="animate-in fade-in  flex items-center justify-center px-5 py-5 ">
-      <div className="w-full mx-auto rounded-lg bg-white shadow-lg px-5 pt-5 pb-10 text-gray-800">
-        <div className="w-full pt-1 pb-5">
-          <div className="overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg relative">
-            <Image
-              src={avatarSrc}
-              alt="Photo of Bill Murray"
-              className="rounded-full "
-              fill={true}
-            />
-          </div>
-        </div>
-        <div className="w-full mb-10">
+    <Card className="animate-in fade-in">
+  <CardHeader>
+  <div className="w-full pt-1 pb-5">
+           <div className="overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg relative">
+             <Image
+               src={avatarSrc}
+               alt="Photo of Bill Murray"
+               className="rounded-full "
+               fill={true}
+             />
+           </div>
+         </div>
+  </CardHeader>
+  <CardContent>
+      <div className="w-full mb-10">
           <div className="text-3xl text-indigo-500 text-left leading-tight h-3">
             “
           </div>
@@ -34,7 +44,9 @@ export function QuoteCard({ quote, author, avatarSrc }: QuoteCardProps) {
             {author}
           </p>
         </div>
-      </div>
-    </div>
+  </CardContent>
+
+</Card>
+
   );
 }
