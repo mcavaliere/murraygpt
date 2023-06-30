@@ -117,7 +117,7 @@ export default function Home({ images }: HomeProps) {
           transition-[bottom] ease-in-out duration-500
           `}
         >
-          <QuoteButton loading={loading} handleClick={handleClick} size="xl" />
+          <QuoteButton loading={loading} handleClick={handleClick} size="lg" />
         </div>
       </div>
 

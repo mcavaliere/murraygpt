@@ -1,19 +1,17 @@
 import { MouseEventHandler } from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui";
+import { Button, ButtonProps } from "@/components/ui";
 
 export type QuoteButtonProps = {
   loading?: boolean;
   handleClick: MouseEventHandler<HTMLButtonElement>;
-  size?: "xl" | "lg" | "md" | "sm";
-};
+} & ButtonProps;
 
 export function QuoteButton({
   loading = false,
   handleClick,
-  size = "sm",
+  size
 }: QuoteButtonProps) {
-  const padding = size === "xl" ? "py-4 px-6" : "px-3 py-2";
 
   return (
     <div
@@ -21,8 +19,8 @@ export function QuoteButton({
       data-component-name="QuoteButton"
     >
       <Button
-
-        // className={`flex relative justify-center rounded-md bg-indigo-600 ${padding} text-${size} font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+        size={size}
+        className={`flex relative justify-center  shadow-sm hover:opacity-80`}
         onClick={handleClick}
         disabled={loading}
       >
