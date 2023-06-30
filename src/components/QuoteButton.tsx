@@ -1,5 +1,6 @@
 import { MouseEventHandler } from "react";
 import Image from "next/image";
+import { Button } from "@/components/ui";
 
 export type QuoteButtonProps = {
   loading?: boolean;
@@ -19,14 +20,14 @@ export function QuoteButton({
       className="flex flex-col align-center relative"
       data-component-name="QuoteButton"
     >
-      <button
-        type="button"
-        className={`flex relative justify-center rounded-md bg-indigo-600 ${padding} text-${size} font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+      <Button
+
+        // className={`flex relative justify-center rounded-md bg-indigo-600 ${padding} text-${size} font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
         onClick={handleClick}
         disabled={loading}
       >
         Generate new quote
-      </button>
+      </Button>
       <div className="flex justify-center align-center flex-row w-full absolute -bottom-10">
         <Image
           src="/images/icons/loader.svg"
