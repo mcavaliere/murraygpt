@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 export type QuoteCardProps = {
   quote: string;
@@ -17,20 +17,20 @@ export type QuoteCardProps = {
 export function QuoteCard({ quote, author, avatarSrc }: QuoteCardProps) {
   return (
     <Card className="animate-in fade-in">
-  <CardHeader>
-  <div className="w-full pt-1 pb-5">
-           <div className="overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg relative">
-             <Image
-               src={avatarSrc}
-               alt="Photo of Bill Murray"
-               className="rounded-full "
-               fill={true}
-             />
-           </div>
-         </div>
-  </CardHeader>
-  <CardContent>
-      <div className="w-full mb-10">
+      <CardHeader>
+        <div className="w-full pt-1 pb-5">
+          <div className="overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg relative">
+            <Image
+              src={avatarSrc}
+              alt="Photo of Bill Murray"
+              className="rounded-full "
+              fill={true}
+            />
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="w-full mb-10">
           <div className="text-3xl text-indigo-500 text-left leading-tight h-3">
             “
           </div>
@@ -44,9 +44,7 @@ export function QuoteCard({ quote, author, avatarSrc }: QuoteCardProps) {
             {author}
           </p>
         </div>
-  </CardContent>
-
-</Card>
-
+      </CardContent>
+    </Card>
   );
 }
