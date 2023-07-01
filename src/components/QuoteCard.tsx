@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
 
 export type QuoteCardProps = {
@@ -18,16 +19,10 @@ export function QuoteCard({ quote, author, avatarSrc }: QuoteCardProps) {
   return (
     <Card className="animate-in fade-in">
       <CardHeader>
-        <div className="w-full pt-1 pb-5">
-          <div className="overflow-hidden rounded-full w-20 h-20 -mt-16 mx-auto shadow-lg relative">
-            <Image
-              src={avatarSrc}
-              alt="Photo of Bill Murray"
-              className="rounded-full "
-              fill={true}
-            />
-          </div>
-        </div>
+        <Avatar className="w-20 h-20 rounded-full aspect-auto relative -mt-16 mx-auto shadow-lg">
+          <AvatarImage src={avatarSrc} alt="Photo of Bill Murray" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
       </CardHeader>
       <CardContent>
         <div className="w-full mb-10">
