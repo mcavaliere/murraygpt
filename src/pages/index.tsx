@@ -6,6 +6,7 @@ import path from "path";
 import { Transition } from "@headlessui/react";
 
 import { QuoteCard } from "@/components/QuoteCard";
+import { QuoteForm } from "@/components/QuoteForm";
 import { randomNumberBetween } from "@/lib/utils/randomNumberBetween";
 import { fetchRandomQuote } from "@/lib/api";
 import { ErrorAlert } from "@/components/ErrorAlert";
@@ -17,14 +18,14 @@ export type HomeProps = {
 };
 
 export const INITIAL_STATE = {
-  messages: [],
+  messages: []
 };
 
 export function reducer(state: any, action: any) {
   switch (action.type) {
     case "APPEND_MESSAGES": {
       return {
-        messages: [...state.messages, ...action.messages],
+        messages: [...state.messages, ...action.messages]
       };
     }
 
@@ -57,7 +58,7 @@ export default function Home({ images }: HomeProps) {
         .catch((error) => {
           setError({
             title: "Ouch. ",
-            message: "I got a boo-boo. 😭 Try again later. ",
+            message: "I got a boo-boo. 😭 Try again later. "
           });
           console.warn("error: ", error);
           setLoading(false);
@@ -120,6 +121,7 @@ export default function Home({ images }: HomeProps) {
           <QuoteButton loading={loading} handleClick={handleClick} size="lg" />
         </div>
       </div>
+      <QuoteForm />
 
       <footer className="z-10 w-full gap-10 flex-col-reverse  max-w-5xl items-center justify-end font-mono text-sm flex md:flex-row md:justify-end ">
         <div className="flex place-items-center gap-2 lg:pointer-events-auto d-block">
@@ -151,7 +153,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      images,
-    },
+      images
+    }
   };
 }
