@@ -1,6 +1,14 @@
 "use client";
 
-import Link from "next/link";
+import { Label } from "@/components/ui/label";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from "@/components/ui/sheet";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -14,19 +22,32 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+
 import { useForm } from "react-hook-form";
 
+export type Tone =
+  | "Whimsical"
+  | "Philosophical"
+  | "Optimistic"
+  | "Romantic"
+  | "Surreal";
+export type Topic =
+  | "Humor"
+  | "Living in the present"
+  | "Joy and happiness"
+  | "Human connections"
+  | "The power of love";
+
+export type RealOrGenerated = "real" | "generated";
+
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters."
-  })
+  tone: z.string(),
+  topic: z.string(),
+  real_or_generated: z.string()
 });
 
 export function QuoteForm() {
@@ -34,7 +55,9 @@ export function QuoteForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: ""
+      topic: "",
+      tone: "",
+      real_or_generated: "generated"
     }
   });
 
@@ -42,72 +65,105 @@ export function QuoteForm() {
     console.log(values);
   }
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="theme"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Theme</FormLabel>
-                <FormControl>
-                  <Select>
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Theme" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Humor">Humor</SelectItem>
-                      <SelectItem value="Living in the present">
-                        Living in the present
-                      </SelectItem>
-                      <SelectItem value="Joy and happiness">
-                        Joy and happiness
-                      </SelectItem>
-                      <SelectItem value="Human connections">
-                        Human connections
-                      </SelectItem>
-                      <SelectItem value="The power of love">
-                        The power of love
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
+    <Sheet>
+      <SheetTrigger>[Options]</SheetTrigger>
+      <SheetContent side="bottom" className="h-[200px]">
+        <SheetHeader>
+          <SheetTitle>Generator Options</SheetTitle>
+        </SheetHeader>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="tone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Tone</FormLabel>
-                <FormControl>
-                  <Select>
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Tone" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Whimsical">Whimsical</SelectItem>
-                      <SelectItem value="Philosophical">
-                        Philosophical
-                      </SelectItem>
-                      <SelectItem value="Optimistic">Optimistic</SelectItem>
-                      <SelectItem value="Romantic">Romantic</SelectItem>
-                      <SelectItem value="Surreal">Surreal</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-row items-center gap-4"
+          >
+            <div className="flex flex-row">
+              <FormField
+                control={form.control}
+                name="topic"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center gap-4">
+                    <FormControl>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Topic" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Humor">Humor</SelectItem>
+                          <SelectItem value="Living in the present">
+                            Living in the present
+                          </SelectItem>
+                          <SelectItem value="Joy and happiness">
+                            Joy and happiness
+                          </SelectItem>
+                          <SelectItem value="Human connections">
+                            Human connections
+                          </SelectItem>
+                          <SelectItem value="The power of love">
+                            The power of love
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="tone"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center gap-4">
+                    <FormControl>
+                      <Select>
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Tone" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Whimsical">Whimsical</SelectItem>
+                          <SelectItem value="Philosophical">
+                            Philosophical
+                          </SelectItem>
+                          <SelectItem value="Optimistic">Optimistic</SelectItem>
+                          <SelectItem value="Romantic">Romantic</SelectItem>
+                          <SelectItem value="Surreal">Surreal</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex flex-row">
+              <FormField
+                control={form.control}
+                name="real_or_generated"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center gap-4">
+                    <FormControl>
+                      <RadioGroup defaultValue="generated">
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="generated" id="r1" />
+                          <Label htmlFor="r1">Generated Quote</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="real" id="r2" />
+                          <Label htmlFor="r2">Real Quote</Label>
+                        </div>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button type="submit">Generate Quote</Button>
+          </form>
+        </Form>
+      </SheetContent>
+    </Sheet>
   );
 }
