@@ -69,15 +69,17 @@ export function QuoteForm() {
       <SheetTrigger>[Options]</SheetTrigger>
       <SheetContent side="bottom" className="h-[200px]">
         <SheetHeader>
-          <SheetTitle>Generator Options</SheetTitle>
+          <SheetTitle className="text-center mb-4">
+            Generator Options
+          </SheetTitle>
         </SheetHeader>
 
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-row items-center gap-4"
+            className="flex flex-col md:flex-row justify-center gap-4"
           >
-            <div className="flex flex-row">
+            <div className="flex flex-row w-full md:w-1/2 justify-center md:justify-end">
               <FormField
                 control={form.control}
                 name="topic"
@@ -137,14 +139,17 @@ export function QuoteForm() {
                 )}
               />
             </div>
-            <div className="flex flex-row">
+            <div className="flex flex-row w-full  md:w-1/2 justify-center md:justify-start gap-4">
               <FormField
                 control={form.control}
                 name="real_or_generated"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center gap-4">
-                    <FormControl>
-                      <RadioGroup defaultValue="generated">
+                  <FormItem className="flex ">
+                    <FormControl className="flex">
+                      <RadioGroup
+                        defaultValue="generated"
+                        className="flex flex-col"
+                      >
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="generated" id="r1" />
                           <Label htmlFor="r1">Generated Quote</Label>
@@ -155,12 +160,13 @@ export function QuoteForm() {
                         </div>
                       </RadioGroup>
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
+              <div className="flex">
+                <Button type="submit">Generate Quote</Button>
+              </div>
             </div>
-            <Button type="submit">Generate Quote</Button>
           </form>
         </Form>
       </SheetContent>
