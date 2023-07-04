@@ -44,11 +44,7 @@ export type Topic =
 
 export type RealOrGenerated = "real" | "generated";
 
-const formSchema = z.object({
-  tone: z.string(),
-  topic: z.string(),
-  real_or_generated: z.string()
-});
+const formSchema = z.object({});
 
 export function QuoteForm() {
   // 1. Define your form.
@@ -62,11 +58,13 @@ export function QuoteForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    console.log("submit: ", values);
   }
   return (
     <Sheet>
-      <SheetTrigger>[Options]</SheetTrigger>
+      <SheetTrigger>
+        <Button className="bg-blue-600">Customize</Button>
+      </SheetTrigger>
       <SheetContent side="bottom" className="h-[200px]">
         <SheetHeader>
           <SheetTitle className="text-center mb-4">
