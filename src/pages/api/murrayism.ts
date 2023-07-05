@@ -8,6 +8,11 @@ export type ResponseType = {
   quote: ChatCompletionRequestMessage;
 };
 
+export const primerPrompt: ChatCompletionRequestMessage = {
+  role: "user",
+  content:
+    "Act as Bill Murray. As Bill Murray, you've had many great quotes throughout your career and personal life, captured in film, in press and media stories, and stories from random people who you've chatted with publicly and randomly. "
+};
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
@@ -22,7 +27,12 @@ export default async function handler(
       "Give me a random Bill Murray quote without citation. Strip the quotation marks out. ",
   };
 
-  const existingConversation = [...req.body.conversation, userPrompt];
+  const existingConversation = [
+    primerPrompt,
+    ...req.body.conversation,
+    userPrompt
+  ];
+
 
   try {
     const response = await openAI.prompt(existingConversation);
@@ -34,7 +44,7 @@ export default async function handler(
     }
 
     return res.status(200).json({
-      quote,
+      quote
     });
   } catch (error) {
     console.log(`---------------- ERROR:  `, error);
