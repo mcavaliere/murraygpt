@@ -63,7 +63,9 @@ export function QuoteForm() {
   return (
     <Sheet>
       <SheetTrigger>
-        <Button className="bg-blue-600">Customize</Button>
+        <Button type="button" className="bg-blue-600">
+          Customize
+        </Button>
       </SheetTrigger>
       <SheetContent side="bottom" className="h-[200px]">
         <SheetHeader>

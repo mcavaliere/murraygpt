@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ChatCompletionRequestMessage } from "openai";
 import { OpenAI } from "@/lib/OpenAI";
+import { inspect } from "util";
 
 const openAI = new OpenAI();
 
 export type ResponseType = {
   quote: ChatCompletionRequestMessage;
 };
-
 export const primerPrompt: ChatCompletionRequestMessage = {
   role: "user",
   content:
@@ -33,6 +33,10 @@ export default async function handler(
     userPrompt
   ];
 
+  console.log(
+    `----------------  existingConversation: `,
+    inspect(existingConversation, false, null, true)
+  );
 
   try {
     const response = await openAI.prompt(existingConversation);
