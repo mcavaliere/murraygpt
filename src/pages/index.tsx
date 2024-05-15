@@ -72,8 +72,9 @@ export default function Home({ images }: HomeProps) {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10">
       <header className="z-10 w-full max-w-5xl items-center justify-between text-sm relative">
-        <div className=" flex w-full justify-center font-mono dark:from-inherit lg:static lg:w-auto ">
+        <div className=" flex flex-col w-full items-center font-mono dark:from-inherit lg:static lg:w-auto gap-4">
           <h1 className="font-bold text-2xl">MurrayGPT</h1>
+          <h2>The best Bill Murray quotes an AI could write.</h2>
         </div>
 
         <div className="absolute right-0 top-0">
@@ -123,18 +124,9 @@ export default function Home({ images }: HomeProps) {
 
       <footer className="z-10 w-full gap-10 flex-col-reverse  max-w-5xl items-center justify-end font-mono text-sm flex md:flex-row md:justify-end ">
         <div className="flex place-items-center gap-2 lg:pointer-events-auto d-block">
-          By <a href="https://mikecavaliere.com">Mike Cavaliere</a> @
-          <a
-            className="bg-slate-900 p-4 rounded-xl"
-            href="https://echobind.com"
-            target="_blank"
-          >
-            <Image
-              src="eb-logo.svg"
-              alt="Echobind Logo"
-              width={100}
-              height={100}
-            />
+          Created by{" "}
+          <a href="https://mikecavaliere.com" className="font-bold">
+            Mike Cavaliere
           </a>
         </div>
       </footer>
