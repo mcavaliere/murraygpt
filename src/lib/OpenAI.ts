@@ -18,9 +18,9 @@ export class OpenAI {
 
   async prompt(messages: ChatCompletionRequestMessage[]) {
     const response = await this.openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o",
       messages,
-      temperature: 0.8,
+      temperature: 0.9,
     });
 
     return response;
