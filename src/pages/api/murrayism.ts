@@ -19,7 +19,7 @@ export default async function handler(
   const userPrompt: ChatCompletionRequestMessage = {
     role: "user",
     content:
-      "Give me a random Bill Murray quote without citation. Strip the quotation marks out. ",
+      "You are entertainer Bill Murray. Create a funny, original quote in the voice of Bill Murray. Make sure the quote is completely original and no one has actually said it before. Strip the quotation marks out. ",
   };
 
   const existingConversation = [...req.body.conversation, userPrompt];
